@@ -17,12 +17,11 @@ import kornia
 warnings.filterwarnings("ignore")
 
 class Dataset(data.Dataset):
-    def __init__(self, indices, input_length, mid, output_length, direc, stack_x):
+    def __init__(self, indices, input_length, mid, output_length, stack_x):
         self.input_length = input_length
         self.mid = mid
         self.output_length = output_length
         self.stack_x = stack_x
-        self.direc = direc
         self.list_IDs = indices
         
     def __len__(self):
@@ -30,11 +29,11 @@ class Dataset(data.Dataset):
 
     def __getitem__(self, index):
         ID = self.list_IDs[index]
+        y = torch.load(ID)[self.mid:(self.mid+self.output_length)]
         if self.stack_x:
-            x = torch.load(self.direc + str(ID) + ".pt")[(self.mid-self.input_length):self.mid].reshape(-1, y.shape[-2], y.shape[-1])
+            x = torch.load(ID)[(self.mid-self.input_length):self.mid].reshape(-1, y.shape[-2], y.shape[-1])
         else:
-            x = torch.load(self.direc + str(ID) + ".pt")[(self.mid-self.input_length):self.mid]
-        y = torch.load(self.direc + str(ID) + ".pt")[self.mid:(self.mid+self.output_length)]
+            x = torch.load(ID)[(self.mid-self.input_length):self.mid]
         return x.float(), y.float()
     
 def train_epoch(train_loader, model, optimizer, loss_function, coef = 0, regularizer = None):
