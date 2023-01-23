@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  turbulent-flow-net:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: turbulent-flow-net
+    volumes:
+      - ${PWD}/TF-net:/app/TF-net
+      - ${PWD}/data_gen.py:/app/data_gen.py
+      - ${PWD}/rbc_data.pt:/app/rbc_data.pt

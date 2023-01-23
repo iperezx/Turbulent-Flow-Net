@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbulent-flow
+  namespace: deep-quicfire
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: turbulent-flow
+  template:
+    metadata:
+      labels:
+        k8s-app: turbulent-flow
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/region
+                operator: In
+                values:
+                - us-west
+      containers:
+      - name: turbulent-flow
+        image: iperezx/turbulent-flow-net:0.1.0
+        resources:
+            limits:
+              memory: 32Gi
+              cpu: 3
+              nvidia.com/gpu: 1
+            requests:
+              memory: 32Gi
+              cpu: 3
+              nvidia.com/gpu: 1
+        volumeMounts:
+        - mountPath: /data
+          name: deep-quicfire-vol
+      volumes:
+      - name: deep-quicfire-vol
+        persistentVolumeClaim:
+          claimName: deep-quicfire-vol

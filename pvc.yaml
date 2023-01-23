@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deep-quicfire-vol
+  namespace: deep-quicfire
+spec:
+  storageClassName: seaweedfs-storage-nvme
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti

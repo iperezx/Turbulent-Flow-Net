@@ -36,6 +36,34 @@ While deep learning has shown tremendous success in a wide range of domains, it 
 * pytorch 10.1
 * matplotlib
 
+## Docker
+Build
+```
+docker build . -t iperezx/turbulent-flow-net:latest
+```
+
+Run
+```
+docker run --name turbulent-flow-net --rm iperezx/turbulent-flow-net:latest
+```
+
+## Docker-compose
+Build
+```
+docker-compose up --build
+```
+
+## Kubernetes
+Create PVC if not created:
+```
+kubectl create -f pvc.yaml
+```
+
+Create deployment:
+```
+kubectl create -f deploy-nautilus.yaml
+```
+
 ## Cite
 ```
 @article{Wang2020TF,
