@@ -24,7 +24,7 @@ spec:
                 - us-west
       containers:
       - name: turbulent-flow
-        image: iperezx/turbulent-flow-net:0.1.0
+        image: iperezx/turbulent-flow-net:latest
         resources:
             limits:
               memory: 32Gi
